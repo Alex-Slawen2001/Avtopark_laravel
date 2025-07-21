@@ -21,6 +21,8 @@
                 <li><a href="/about" class="hover:underline">О нас</a></li>
                 <li><a href="/services" class="hover:underline">Услуги</a></li>
                 <li><a href="/contact" class="hover:underline">Контакты</a></li>
+                <li><a href="/reg" class="hover:underline">Регистрация</a></li>
+                <li><a href="/login" class="hover:underline">Войти</a></li>
             </ul>
         </nav>
     </div>

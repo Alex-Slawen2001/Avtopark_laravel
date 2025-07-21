@@ -9,6 +9,7 @@ class GetIndex extends Controller
     public function getIndex() {
         return view('index.main',[
           'title'=>'Автопарк',
+            'text'=>"Добро пожаловать на главную страницу"
         ]);
     }
 }

@@ -6,7 +6,7 @@
     <div class="container mx-auto px-4">
         <!-- Приветственная секция -->
         <section class="text-center mb-8">
-            <h1 class="text-4xl font-bold mb-4">Добро пожаловать на наш сайт!</h1>
+            <h1 class="text-4xl font-bold mb-4">{{ $text }}</h1>
             <p class="text-lg">Мы предлагаем лучшие услуги для вашего комфорта.</p>
         </section>
         <!-- Секция с карточками -->
