@@ -31,8 +31,8 @@ class GetReg extends Controller
         ]);
         Auth::login($user);
         return redirect()->route('home')->with('success','Регистрация успешна!');
-
     }
+
 
 
 
