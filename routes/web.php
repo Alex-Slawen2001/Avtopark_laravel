@@ -18,6 +18,6 @@ Route::prefix('custom')->group(function(){
     })->name('home');
 });
 Route::prefix('lk')->group(function() {
-   Route::get('cab',[CabinetUser::class,'getView']);
+   Route::get('/cab',[CabinetUser::class,'getView'])->name('cabinet');
 });
 

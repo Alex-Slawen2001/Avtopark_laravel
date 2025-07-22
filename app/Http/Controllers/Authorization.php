@@ -23,7 +23,7 @@ class Authorization extends Controller
            'name'=>$validated['name'],
            'password' => $validated['password'],
         ])) {
-           return redirect()->intended('/');
+           return redirect()->intended('/lk/cab');
        }else {
           return back()->withErrors(['auth'=>"error authorization"])->withInput();
        }
