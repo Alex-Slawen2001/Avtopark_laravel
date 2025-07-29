@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Car extends Model
 {
+    protected $fillable = ['model','make_year'];
     public function users(): BelongsToMany  {
         return $this->belongsToMany(User::class);
     }

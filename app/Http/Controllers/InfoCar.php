@@ -42,12 +42,13 @@ class InfoCar extends Controller
                 'make_year' => $validate_data_car['make_year']
             ]);
         }
-//        return redirect()->route('')->with("New user $validate_data_user[name] and new car $validate_data_car[model]
-//        successful added");
+        return redirect()->route('home')->with("New user $validate_data_user[name] and new car $validate_data_car[model]
+        successful added");
 
     }
     public function getFormAdd() {
-        return view();
-        //created view
+        return view('forms.form_new_info',[
+            'title'=>'Добавить нового пользователя и машину',
+        ]);
     }
 }

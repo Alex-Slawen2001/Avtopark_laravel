@@ -5,7 +5,7 @@
     <li><strong>Email:</strong> {{ Auth::user()->email }}</li>
     <li><strong>Дата регистрации:</strong> {{ Auth::user()->created_at->format('d.m.Y H:i') }}</li>
 </ul>
-{{--<form method="POST" action="{{ route('logout') }}">--}}
+{{--<forms method="POST" action="{{ route('logout') }}">--}}
 {{--    @csrf--}}
 {{--    <button type="submit">Выйти</button>--}}
-{{--</form>--}}
+{{--</forms>--}}
