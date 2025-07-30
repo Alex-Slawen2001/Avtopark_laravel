@@ -20,6 +20,7 @@ Route::prefix('avto')->group(function() {
    Route::get('/info_avto',[InfoCar::class,'getInfoAuto']);
    Route::get('/form_add',[InfoCar::class,'getFormAdd']);
    Route::post('/create_avto_user',[InfoCar::class,'addAvtoUser'])->name('addInfo');
+   Route::get('/user/',[InfoCar::class,'getInfoUser']);
 
 });
 Route::prefix('custom')->group(function(){

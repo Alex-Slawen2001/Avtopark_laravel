@@ -51,4 +51,19 @@ class InfoCar extends Controller
             'title'=>'Добавить нового пользователя и машину',
         ]);
     }
+
+    public function getInfoUser(Request $request) {
+        $userName = $request->input('name');
+     $user = User::where('name',$userName)->first();
+     if (!$user) {
+         return response()->json(['error' => 'Пользователь не найден'], 404);
+     }
+        $relations = ['users', 'cars']; // список связей
+
+        $user->load($relations);
+
+        return response()->json($user);
+
+    }
+
 }
