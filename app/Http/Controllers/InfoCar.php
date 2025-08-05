@@ -58,7 +58,7 @@ class InfoCar extends Controller
      if (!$user) {
          return response()->json(['error' => 'Пользователь не найден'], 404);
      }
-        $relations = ['users', 'cars']; // список связей
+        $relations = ['cars','users']; // список связей
 
         $user->load($relations);
 
