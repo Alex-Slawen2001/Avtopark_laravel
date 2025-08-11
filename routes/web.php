@@ -21,6 +21,7 @@ Route::prefix('avto')->group(function() {
    Route::get('/form_add',[InfoCar::class,'getFormAdd']);
    Route::post('/create_avto_user',[InfoCar::class,'addAvtoUser'])->name('addInfo');
    Route::get('/user/',[InfoCar::class,'getInfoUser']);
+   Route::get('/car/',[InfoCar::class,'getInfoCar']);
 
 });
 Route::prefix('custom')->group(function(){

@@ -65,5 +65,16 @@ class InfoCar extends Controller
         return response()->json($user);
 
     }
+    public function getInfoCar(Request $request) {
+       $modelCar = $request->input('model');
+        $car = Car::where('model',$modelCar)->first();
+        if (!$car) {
+            return response()->json(['error'=>'car_not_found'],404);
+        }
+        $relations = ['users','cars'];
+        $car->load($relations);
+        return response()->json($car);
+    }
 
 }
+

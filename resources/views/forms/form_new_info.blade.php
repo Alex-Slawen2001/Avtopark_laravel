@@ -25,3 +25,4 @@
         <button type="submit">Добавить</button>
     </form>
 </x-layout>
+
