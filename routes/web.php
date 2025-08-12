@@ -24,6 +24,9 @@ Route::prefix('avto')->group(function() {
    Route::get('/car/',[InfoCar::class,'getInfoCar']);
 
 });
+Route::prefix('date')->group(function() {
+    Route::get('/time/',[]);
+});
 Route::prefix('custom')->group(function(){
     Route::get('/success',function() {
        return "Success";
