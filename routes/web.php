@@ -5,6 +5,7 @@ use App\Http\Controllers\GetReg;
 use App\Http\Controllers\Authorization;
 use App\Http\Controllers\CabinetUser;
 use App\Http\Controllers\InfoCar;
+use App\Http\Controllers\Time;
 
 Route::get('/', [GetIndex::class,'getIndex']);
 Route::prefix('auth')->group(function() {
@@ -25,7 +26,8 @@ Route::prefix('avto')->group(function() {
 
 });
 Route::prefix('date')->group(function() {
-    Route::get('/time/',[]);
+    Route::get('/time/',[Time::class,'getFormTime']);
+    Route::post('/time/',[Time::class,'getTime'])->name('time');
 });
 Route::prefix('custom')->group(function(){
     Route::get('/success',function() {
