@@ -28,6 +28,8 @@ Route::prefix('avto')->group(function() {
 Route::prefix('date')->group(function() {
     Route::get('/time/',[Time::class,'getFormTime']);
     Route::post('/time/',[Time::class,'getTime'])->name('time');
+    Route::get('/setTime/',[Time::class,'getFormSetTime']);
+    Route::post('/setTime/',[Time::class,'setTime'])->name('setTime');
 });
 Route::prefix('custom')->group(function(){
     Route::get('/success',function() {
