@@ -6,6 +6,7 @@ use App\Http\Controllers\Authorization;
 use App\Http\Controllers\CabinetUser;
 use App\Http\Controllers\InfoCar;
 use App\Http\Controllers\Time;
+use App\Http\Controllers\RecoveryPassword;
 
 Route::get('/', [GetIndex::class,'getIndex']);
 Route::prefix('auth')->group(function() {
@@ -13,6 +14,8 @@ Route::prefix('auth')->group(function() {
     Route::post('/reg',[GetReg::class,'register']);
     Route::get('/auth',[Authorization::class,'getFormAuth'])->name('auth');
     Route::post('/auth',[Authorization::class,'getDataUser']);
+    Route::get('/pass_recovery',[RecoveryPassword::class,'getFormRecovery']);
+    Route::post('/pass_recovery',[RecoveryPassword::class,''])->name('recovery');
 });
 Route::prefix('lk')->group(function() {
     Route::get('/cab',[CabinetUser::class,'getView'])->name('cabinet');
