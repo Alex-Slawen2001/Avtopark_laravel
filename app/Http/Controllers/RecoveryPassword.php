@@ -8,7 +8,9 @@ use App\Models\User;
 class RecoveryPassword extends Controller
 {
     public function getFormRecovery() {
-        return view('recovery.form_recovery');
+        return view('recovery.form_recovery',[
+            'title'=>'Восстановление пароля',
+        ]);
     }
     public function recoveryPassword(Request $request) {
        $email = $request->input('email');
@@ -17,7 +19,7 @@ class RecoveryPassword extends Controller
            return response()->json(['error'=>'email_not_found'],404);
        }else {
         $token = app('auth.password.broker')->createToken($user);
-        \Mail::send('email.reset.password',['token'=>$token,'user'=>$user],function($message) use ($user) {
+        \Mail::send('email.reset_password',['token'=>$token,'user'=>$user],function($message) use ($user) {
             $message->to($user->email);
             $message->subject('Восстановление пароля');
         });

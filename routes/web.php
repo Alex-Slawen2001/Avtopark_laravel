@@ -15,7 +15,7 @@ Route::prefix('auth')->group(function() {
     Route::get('/auth',[Authorization::class,'getFormAuth'])->name('auth');
     Route::post('/auth',[Authorization::class,'getDataUser']);
     Route::get('/pass_recovery',[RecoveryPassword::class,'getFormRecovery']);
-    Route::post('/pass_recovery',[RecoveryPassword::class,''])->name('recovery');
+    Route::post('/pass_recovery',[RecoveryPassword::class,'recoveryPassword'])->name('recovery');
 });
 Route::prefix('lk')->group(function() {
     Route::get('/cab',[CabinetUser::class,'getView'])->name('cabinet');
