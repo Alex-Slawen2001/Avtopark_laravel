@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Главная страница сайта">
-    <title>{{ $title }}</title>
+    <title>{{ $title ?? 'Мой сайт' }}</title>
     <!-- Подключение стилей -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- Подключение шрифтов -->
+    <!-- Подключение шрифтов Google (если хотите Roboto) -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
+<body class="bg-gray-50 text-gray-900 min-h-screen font-sans flex flex-col">
 <header class="bg-blue-600 text-white py-4">
     <div class="container mx-auto flex justify-between items-center px-4">
         <div class="text-2xl font-bold">
@@ -27,9 +28,10 @@
         </nav>
     </div>
 </header>
-<body>
-{{ $slot }}
-</body>
+
+<main class="flex-1">
+    {{ $slot }}
+</main>
 
 <footer class="bg-gray-800 text-white py-6">
     <div class="container mx-auto px-4 text-center">
@@ -42,6 +44,8 @@
         </nav>
     </div>
 </footer>
+
 <!-- Подключение скриптов -->
 <script src="{{ asset('js/app.js') }}"></script>
+</body>
 </html>
