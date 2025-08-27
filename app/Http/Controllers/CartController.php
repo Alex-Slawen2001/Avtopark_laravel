@@ -9,7 +9,7 @@ class CartController extends Controller
     public function cart()
     {
         $cart = session()->get('cart');
-        return view('cart', compact('cart'));
+        return view('carts.cart', compact('cart'));
     }
     public function addToCart(Request $request, $id) {
         $car = Car::find($id);
@@ -26,6 +26,7 @@ class CartController extends Controller
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
+
     public function updateCart(Request $request)
     {
         if($request->id && $request->quantity){

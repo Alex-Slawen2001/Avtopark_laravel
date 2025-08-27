@@ -7,6 +7,7 @@ use App\Http\Controllers\CabinetUser;
 use App\Http\Controllers\InfoCar;
 use App\Http\Controllers\Time;
 use App\Http\Controllers\RecoveryPassword;
+use App\Http\Controllers\CartController;
 
 Route::get('/', [GetIndex::class,'getIndex']);
 Route::prefix('auth')->group(function() {
@@ -33,6 +34,12 @@ Route::prefix('date')->group(function() {
     Route::post('/time/',[Time::class,'getTime'])->name('time');
     Route::get('/setTime/',[Time::class,'getFormSetTime']);
     Route::post('/setTime/',[Time::class,'setTime'])->name('setTime');
+});
+Route::prefix('carts')->group(function () {
+    Route::get('/cart/',[CartController::class,'cart']);
+    Route::post('/cart/add/{id}',[CartController::class,'addToCart'])->name('add.to.cart');;
+    Route::patch('/update-cart',[CartController::class,'updateCart'])->name('update.cart');;
+    Route::delete('/remove-from-cart',[CartController::class,'removeFromCart'])->name('remove.from.cart');
 });
 Route::prefix('custom')->group(function(){
     Route::get('/success',function() {
