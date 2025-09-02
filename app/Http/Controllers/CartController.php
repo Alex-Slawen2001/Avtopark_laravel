@@ -16,16 +16,20 @@ class CartController extends Controller
             'title' => 'Тестовая форма для отправки POST',
         ]);
     }
-    public function addToCart(Request $request, $id = 1) {
+    public function addToCart(Request $request) {
+        $id = $request->input('id_serve');
         $car = Car::find($id);
+        if (!$car) {
+            return redirect()->back()->with('error', 'Car not found!');
+        }
         $cart = session()->get('cart', []);
         if(isset($cart[$id])) {
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
-                "name" => $car->name,
-                "quantity" => 1,
-                "price" => $car->price,
+                "make_year" => $car->make_year,
+                "id" => 1,
+                "model" => $car->model,
             ];
         }
         session()->put('cart', $cart);

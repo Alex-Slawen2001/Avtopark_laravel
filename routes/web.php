@@ -38,7 +38,7 @@ Route::prefix('date')->group(function() {
 Route::prefix('carts')->group(function () {
     Route::get('/cart/',[CartController::class,'cart']);
     Route::get('/cart_post_form/',[CartController::class,'postCart']);
-    Route::post('/cart/add/{id?}',[CartController::class,'addToCart'])->name('add.to.cart');;
+    Route::post('/cart/add/',[CartController::class,'addToCart'])->name('add.to.cart');;
     Route::patch('/update-cart',[CartController::class,'updateCart'])->name('update.cart');;
     Route::delete('/remove-from-cart',[CartController::class,'removeFromCart'])->name('remove.from.cart');
 });
