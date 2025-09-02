@@ -11,7 +11,12 @@ class CartController extends Controller
         $cart = session()->get('cart');
         return view('carts.cart', compact('cart'));
     }
-    public function addToCart(Request $request, $id) {
+    public function postCart() {
+        return view('forms.form_add_carts',[
+            'title' => 'Тестовая форма для отправки POST',
+        ]);
+    }
+    public function addToCart(Request $request, $id = 1) {
         $car = Car::find($id);
         $cart = session()->get('cart', []);
         if(isset($cart[$id])) {
