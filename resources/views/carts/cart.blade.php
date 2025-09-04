@@ -88,7 +88,6 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
-        // Добавьте обработчики событий для кнопок, если они не добавлены в HTML
         document.querySelectorAll('.update-cart-btn').forEach(button => {
             button.addEventListener('click', function () {
                 const id = this.dataset.id;
