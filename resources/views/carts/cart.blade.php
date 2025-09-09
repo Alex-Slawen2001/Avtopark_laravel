@@ -5,29 +5,36 @@
         <tr>
             <th>Product</th>
             <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th>Action</th>
+            <th>Make year</th>
         </tr>
         </thead>
         <tbody>
         @foreach(session('cart') as $id => $details)
             <tr id="row-{{ $id }}">
                 <!-- Проверка и вывод данных для первого типа элемента -->
-                @if(isset($details['name']) || isset($details['quantity']) || isset($details['price']))
-                    <td>{{ $details['name'] ?? 'N/A' }}</td>
+                @if(isset($details['model']) || isset($details['quantity']) || isset($details['price']))
+                    <td>{{ $details['model'] ?? 'N/A' }}</td>
                     <td>
-                        <input type="number" id="quantity-{{ $id }}" value="{{ $details['quantity'] }}" min="1" required>
-                        <button onclick="updateCart('{{ $id }}', document.getElementById('quantity-{{ $id }}').value)">Update</button>
+                        <form action="{{ route('update.cart') }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="id" value="{{ $id }}">
+                            <input type="number" name="quantity" value="{{ $details['quantity'] }}" min="1" required>
+                            <button type="submit">Update</button>
+                        </form>
                     </td>
-                    <td>${{ $details['price'] ?? 'N/A' }}</td>
 
                     <!-- Проверка и вывод данных для второго типа элемента -->
-                @elseif(isset($details['make_year']) || isset($etails['id']) || isset($details['model']))
-                    <td>{{ $details['model'] }}</td>
+                @elseif(isset($details['make_year']) || isset($etails['id']) || isset($details['make_year']))
+                    <td>{{ $details['make_year'] }}</td>
                     <td>
-                        <input type="number" id="quantity-{{ $id }}" value="{{ $details['quantity'] ?? 1 }}" min="1" required>
-                        <button onclick="updateCart('{{ $id }}', document.getElementById('quantity-{{ $id }}').value)">Update</button>
+                        <form action="{{ route('update.cart') }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="id" value="{{ $id }}">
+                            <input type="number" name="quantity" value="{{ $details['quantity'] }}" min="1" required>
+                            <button type="submit">Update</button>
+                        </form>
                     </td>
                     <td>{{ $details['id'] }}</td>
                 @else
@@ -35,7 +42,12 @@
                 @endif
 
                 <td>
-                    <button onclick="removeFromCart('{{ $id }}')">Remove</button>
+                    <form action="{{ route('remove.from.cart') }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="id" value="{{ $id }}">
+                        <button type="submit">Remove</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
@@ -45,4 +57,5 @@
 @else
     <p>Your cart is empty.</p>
 @endif
+
 
