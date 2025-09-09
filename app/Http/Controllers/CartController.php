@@ -17,8 +17,13 @@ class CartController extends Controller
         ]);
     }
     public function addToCart(Request $request) {
-        $id = $request->input('id_serve');
-        $car = Car::find($id);
+        $valid = $request->validate([
+           'id_serve'=>'required|integer|exists:cars,id',
+        ]);
+            $id = $request->input('id_serve');
+            if ($valid) {
+                $car = Car::findOrFail($id);
+            }
         if (!$car) {
             return redirect()->back()->with('error', 'Car not found!');
         }
@@ -38,22 +43,23 @@ class CartController extends Controller
 
     public function updateCart(Request $request)
     {
-        if($request->id && $request->quantity){
-            $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
-            session()->put('cart', $cart);
-            session()->flash('success', 'Cart updated successfully');
+        $id = $request->input('serve_id');
+        $quantity = $request->input('quantity');
+        $cart = session()->get('cart',[]);
+        if(isset($cart[$id])) {
+            $cart[$id['quantity']] = $quantity;
+            session()->put('cart',$cart);
         }
+        return response()->json(['success' => true, 'message' => 'Cart updated successfully!']);
     }
     public function removeFromCart(Request $request)
     {
-        if($request->id) {
-            $cart = session()->get('cart');
-            if(isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
-            }
-            session()->flash('success', 'Product removed successfully');
+        $id = $request->input('id_serve');
+        $cart = session()->get('cart',[]);
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+            session()->put('cart',$cart);
         }
+        return response()>json(['success' => true, 'message' => 'Product removed from cart successfully!']);
     }
 }
