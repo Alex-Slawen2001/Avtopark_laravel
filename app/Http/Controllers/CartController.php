@@ -62,14 +62,24 @@ class CartController extends Controller
         }
         return response()->json(['success' => true, 'message' => 'Cart updated successfully!']);
     }
-    public function removeFromCart(Request $request)
-    {
-        $id = $request->input('id_serve');
+
+
+    public function removeFromCart(Request $request) {
+        $id = $request->input('id');
         $cart = session()->get('cart',[]);
         if (isset($cart[$id])) {
-            unset($cart[$id]);
-            session()->put('cart',$cart);
+            if ($cart[$id]['quantity'] > 1) {
+                $cart[$id]['quantity']--;
+                session()->put('cart',$cart);
+            }else if($cart[$id]['quantity'] == 1) {
+                unset($cart[$id]);
+                session()->put('cart',$cart);
+            }
         }
-        return response()->json(['success' => true, 'message' => 'Product removed from cart successfully!']);
+        return response()->json(['message' => 'successful remove']);
     }
 }
+
+
+
+
