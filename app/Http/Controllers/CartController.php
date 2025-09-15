@@ -35,16 +35,14 @@ class CartController extends Controller
         } else {
             $cart[$id] = [
                 "make_year" => $car->make_year,
-                "id" => $car->id, // Используем правильный ID товара
+                "id" => $car->id,
                 "model" => $car->model,
-                "quantity" => 1, // Инициализируем количество
+                "quantity" => 1,
             ];
         }
 
-        // Сохраняем обновленную корзину в сессии
         session()->put('cart', $cart);
 
-        // Возвращаем пользователя на предыдущую страницу с сообщением об успехе
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
