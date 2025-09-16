@@ -10,6 +10,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Подключение шрифтов Google (если хотите Roboto) -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body class="bg-gray-50 text-gray-900 min-h-screen font-sans flex flex-col">
 <header class="bg-blue-600 text-white py-4">

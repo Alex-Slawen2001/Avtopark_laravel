@@ -8,6 +8,7 @@ use App\Http\Controllers\InfoCar;
 use App\Http\Controllers\Time;
 use App\Http\Controllers\RecoveryPassword;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', [GetIndex::class,'getIndex']);
 Route::prefix('auth')->group(function() {
@@ -41,6 +42,11 @@ Route::prefix('carts')->group(function () {
     Route::post('/cart/add/',[CartController::class,'addToCart'])->name('add.to.cart');;
     Route::patch('/update-cart',[CartController::class,'updateCart'])->name('update.cart');;
     Route::delete('/remove-from-cart',[CartController::class,'removeFromCart'])->name('remove.from.cart');
+});
+Route::prefix('pay_system')->group(function() {
+   Route::get('/pay_form/',[PaymentController::class,'getFormPay']);
+   Route::post('/pay/',[PaymentController::class,'createPaymentIntent'])->name('pay_process');
+//   Route::get('/pay_success/',PaymentController::class)->name('pay_success');
 });
 Route::prefix('custom')->group(function(){
     Route::get('/success',function() {
