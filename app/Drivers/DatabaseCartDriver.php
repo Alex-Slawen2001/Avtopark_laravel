@@ -35,4 +35,38 @@ class DatabaseCartDriver implements  CartDriver{
 
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
+    public function updateCart(Request $request)
+    {
+        $id = $request->input('id');
+        $quantity = $request->input('quantity');
+        $cart = session()->get('cart',[]);
+        if (isset($cart[$id])) {
+            if (!isset($cart[$id]['quantity'])) {
+                $cart[$id]['quantity'] = 1;
+            }else {
+                $cart[$id]['quantity'] = $quantity;
+            }
+            session()->put('cart',$cart);
+        }
+        return response()->json(['success' => true, 'message' => 'Cart updated successfully!']);
+    }
+    public function  removeFromCart(Request $request)
+    {
+        $id = $request->input('id');
+        $quantity = $request->input('quantity');
+        $cart = session()->get('cart',[]);
+        if (isset($cart[$id])) {
+            if (!isset($cart[$id]['quantity'])) {
+                if ($cart[$id]['quantity'] == 1) {
+                    unset($cart[$id]);
+                    session()->put('cart',$cart);
+                }else if ($cart[$id]['quantity'] > 1) {
+                    $cart[$id]['quantity']--;
+                    session()->put('cart',$cart);
+                }
+            }
+        }
+        return response()->json(['message' => 'successful remove']);
+    }
+
 }
