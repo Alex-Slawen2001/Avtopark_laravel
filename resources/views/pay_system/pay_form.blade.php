@@ -59,9 +59,12 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             payBtn.disabled = true;
-            fetch('/create-payment-intent', {
+            fetch('{{ route('pay_process') }}', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
                 body: JSON.stringify({
                     amount: document.getElementById('amount').value
                 })

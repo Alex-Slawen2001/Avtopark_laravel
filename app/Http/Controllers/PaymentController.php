@@ -22,7 +22,7 @@ class PaymentController extends Controller
         }
     }
     public function getFormPay() {
-        return view('pay_system',[
+        return view('pay_system.pay_form',[
             'title'=>'форма для заполнения данных платежа',
         ]);
     }
