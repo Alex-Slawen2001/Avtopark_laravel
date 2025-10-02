@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Drivers\DatabaseCartDriver;
 use Illuminate\Http\Request;
 use App\Models\Car;
 class CartController extends Controller
@@ -16,65 +17,46 @@ class CartController extends Controller
             'title' => 'Тестовая форма для отправки POST',
         ]);
     }
+    protected DatabaseCartDriver $cartDriver;
+    public function __construct(DatabaseCartDriver $cartDriver)
+    {
+        $this->cartDriver = $cartDriver;
+    }
     public function addToCart(Request $request) {
+
         $valid = $request->validate([
             'id_serve' => 'required|integer|exists:cars,id',
         ]);
-
-        $id = $request->input('id_serve');
-
-        if ($valid) {
-            $car = Car::findOrFail($id);
+        $result = $this->cartDriver->addToCart($valid);
+        if ($result['success']) {
+            return redirect()->back()->with('success',$result['message']);
         }
-        if (!$car) {
-            return redirect()->back()->with('error', 'Car not found!');
-        }
-        $cart = session()->get('cart', []);
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                "make_year" => $car->make_year,
-                "id" => $car->id,
-                "model" => $car->model,
-                "quantity" => 1,
-            ];
-        }
-
-        session()->put('cart', $cart);
-
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return redirect()->back()->with('error',$result['message']);
     }
 
     public function updateCart(Request $request) {
-        $id = $request->input('id');
-        $quantity = $request->input('quantity');
-        $cart = session()->get('cart', []);
-        if (isset($cart[$id])) {
-            if (!isset($cart[$id]['quantity'])) {
-                $cart[$id]['quantity'] = 1; // Инициализируем количество, если его нет
-            } else {
-                $cart[$id]['quantity'] = $quantity; // Обновляем количество
-            }
-            session()->put('cart', $cart);
+        $valid = $request->validate([
+            'id' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
+        ]);
+        $result = $this->cartDriver->updateCart($valid);
+        if ($result['success']) {
+            return response()->json($result);
         }
-        return response()->json(['success' => true, 'message' => 'Cart updated successfully!']);
+        return response()->json($result, 400);
     }
 
 
-    public function removeFromCart(Request $request) {
-        $id = $request->input('id');
-        $cart = session()->get('cart',[]);
-        if (isset($cart[$id])) {
-            if ($cart[$id]['quantity'] > 1) {
-                $cart[$id]['quantity']--;
-                session()->put('cart',$cart);
-            }else if($cart[$id]['quantity'] == 1) {
-                unset($cart[$id]);
-                session()->put('cart',$cart);
-            }
+    public function removeFromCart(Request $request)
+    {
+        $valid = $request->validate([
+            'id' => 'required|integer',
+        ]);
+        $result  = $this->cartDriver->removeFromCart($valid);
+        if ($result['success']) {
+            return response()->json($result);
         }
-        return response()->json(['message' => 'successful remove']);
+        return response()->json($result, 400);
     }
 }
 
