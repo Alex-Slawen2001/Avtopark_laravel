@@ -4,7 +4,6 @@ use App\Contracts\InfoCarDriver;
 use App\Models\Car;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use mysql_xdevapi\Exception;
 use function Symfony\Component\Routing\Loader\load;
 
 class DatabaseInfoCar implements InfoCarDriver {
@@ -18,17 +17,17 @@ class DatabaseInfoCar implements InfoCarDriver {
             }
         }
     }
-    public function addAutoUser(array $data)
+    public function addAutoUser(array $data1, array $data2)
     {
             User::create([
-                'name' => $data['name'],
-                'email'=> $data['email'],
-                'password' => Hash::make($data['password'])
+                'name' => $data1['name'],
+                'email'=> $data1['email'],
+                'password' => Hash::make($data1['password'])
             ]);
 
             Car::create([
-               'model' => $data['model'],
-                'make_year' => $data['make_year']
+               'model' => $data2['model'],
+                'make_year' => $data2['make_year']
             ]);
 
         return redirect()->route('home')->with("New user and car successful added");

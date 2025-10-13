@@ -6,17 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Car;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Drivers\DatabaseInfoCar;
 
 class InfoCar extends Controller
 {
+    protected DatabaseInfoCar $infoCar;
     public function getInfoAuto(Request $request) {
-      $cars = Car::with('users')->get();
-      foreach ($cars as $car) {
-          dump($car);
-          foreach ($car->users as $user) {
-              dump($user->name);
-          }
-      }
+     $this->infoCar->getInfoCar($request);
     }
     public function addAvtoUser(Request $request) {
         $validate_data_user = $request->validate([
@@ -28,22 +24,7 @@ class InfoCar extends Controller
             'model'=>'required|string|max:30',
             'make_year'=>'required|string|max:20'
         ]);
-        if (!empty($validate_data_user)) {
-            User::create([
-                'name' => $validate_data_user['name'],
-                'email'=>$validate_data_user['email'],
-                'password'=>Hash::make($validate_data_user['password']),
-            ]);
-
-        }
-        if (!empty($validate_data_car)) {
-            Car::create([
-                'model' => $validate_data_car['model'],
-                'make_year' => $validate_data_car['make_year']
-            ]);
-        }
-        return redirect()->route('home')->with("New user $validate_data_user[name] and new car $validate_data_car[model]
-        successful added");
+        $this->infoCar->addAutoUser($validate_data_user,$validate_data_car);
 
     }
     public function getFormAdd() {
@@ -54,26 +35,12 @@ class InfoCar extends Controller
 
     public function getInfoUser(Request $request) {
         $userName = $request->input('name');
-     $user = User::where('name',$userName)->first();
-     if (!$user) {
-         return response()->json(['error' => 'Пользователь не найден'], 404);
-     }
-        $relations = ['cars','users']; // список связей
-
-        $user->load($relations);
-
-        return response()->json($user);
+        $this->infoCar->getInfoCar($userName);
 
     }
     public function getInfoCar(Request $request) {
        $modelCar = $request->input('model');
-        $car = Car::where('model',$modelCar)->first();
-        if (!$car) {
-            return response()->json(['error'=>'car_not_found'],404);
-        }
-        $relations = ['users','cars'];
-        $car->load($relations);
-        return response()->json($car);
+        $this->infoCar->getInfoCar($modelCar);
     }
 
 }
