@@ -10,9 +10,12 @@ use App\Drivers\DatabaseInfoCar;
 
 class InfoCar extends Controller
 {
-    protected DatabaseInfoCar $infoCar;
-    public function getInfoAuto(Request $request) {
-     $this->infoCar->getInfoCar($request);
+    protected $infoCar;
+    public function __construct() {
+        $this->infoCar = new DatabaseInfoCar();
+    }
+    public function getInfoAuto() {
+     $this->infoCar->getInfoAuto();
     }
     public function addAvtoUser(Request $request) {
         $validate_data_user = $request->validate([
@@ -35,7 +38,7 @@ class InfoCar extends Controller
 
     public function getInfoUser(Request $request) {
         $userName = $request->input('name');
-        $this->infoCar->getInfoCar($userName);
+        $this->infoCar->getInfoUser($userName);
 
     }
     public function getInfoCar(Request $request) {

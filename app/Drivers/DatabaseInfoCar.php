@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use function Symfony\Component\Routing\Loader\load;
 
 class DatabaseInfoCar implements InfoCarDriver {
-    public function  getInfoAuto(array $data)
+    public function  getInfoAuto()
     {
         $cars = Car::with('users')->get();
         foreach ($cars as $car) {
@@ -39,7 +39,7 @@ class DatabaseInfoCar implements InfoCarDriver {
            return response()->json(['error'=>"User with name $name not found"]);
        }
        $relations = ['users','cars'];
-       $info = load($relations);
+       $info = $user->load($relations);
        return response()->json($info);
     }
     public function  getInfoCar($model)
