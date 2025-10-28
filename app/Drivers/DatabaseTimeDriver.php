@@ -16,4 +16,16 @@ class DatabaseTimeDriver implements iTime {
        $time->load($relations);
        return response()->json($time);
     }
-}
+    public function getTimeInterval(Request $request)
+    {
+        $timeInterval = $request->input('time1','time2');
+        $carFree = Car::where('time', '>',$timeInterval[0],'<',$timeInterval[1]);
+        if (!$carFree) {
+        return response()->json(['error'=>'free car not fount'],404);
+        }
+        $relations =  ['users','cars'];
+        $carFree->load($relations);
+        return response()->json($carFree);
+    }
+
+ }
