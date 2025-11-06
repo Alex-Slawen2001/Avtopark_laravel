@@ -27,5 +27,21 @@ class DatabaseTimeDriver implements iTime {
         $carFree->load($relations);
         return response()->json($carFree);
     }
+    public function setTime(Request $request)
+    {
+        $time = $request->input('time');
+        $model = $request->input('model');
+        if (empty($model) || empty($time)) {
+            return response()->json(['error'=>'this data not found'],404);
+        }
+        if ($model) {
+            $car = Car::find('model');
+            $car->time = $time;
+            $car->save();
+        }else {
+            return response()->json(['error'=>'model is not found'],404);
+    }
 
- }
+}
+
+}
