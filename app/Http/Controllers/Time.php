@@ -4,34 +4,26 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Drivers\DatabaseTimeDriver;
 
 class Time extends Controller
 {
+    protected $driver;
+    public function __construct(DatabaseTimeDriver $driver)
+    {
+        $this->driver = $driver;
+    }
+
     public function getFormTime() {
         return view('time.formTime',[
             'title'=>'Form get car in time'
         ]);
     }
     public function getTime(Request $request) {
-        $timeFree = $request->input('time');
-        $time = Car::where('time',$timeFree)->get();
-        if (!$time) {
-            return response()->json(['info'=>'Free car in this time not found'],100);
-        }
-        $relations = ['users','cars'];
-        $time->load($relations);
-        return response()->json($time);
+        $this->driver->getTime($request);
     }
     public function getTimeInterval(Request $request) {
-        $timeInterval = $request->input(['time1','time2']);
-        $carFree = Car::where('time','>',$timeInterval[0],'<',$timeInterval[1]);
-        if (!$carFree) {
-            return response()->json(['error'=>'free car not fount'],404);
-        }
-        $relations = ['users','cars'];
-        $carFree->load($relations);
-        return response()->json($carFree);
-
+        $this->getTimeInterval($request);
     }
     public function getFormSetTime() {
         return view('time.setTime',[
@@ -39,15 +31,7 @@ class Time extends Controller
         ]);
     }
     public function setTime(Request $request) {
-        $time = $request->input('time');
-        $model = $request->input('model');
-        if ($model) {
-        $car = Car::find('model');
-        $car->time = $time;
-        $car->save();
-    }else {
-            return response()->json(['error'=>'model is not found'],404);
-        }
+       $this->driver->setTime($request);
     }
 
 }
